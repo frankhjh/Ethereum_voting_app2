@@ -1,4 +1,4 @@
-from info2 import w3,sorting_contract
+from conn import w3,sorting_contract
 from flask import Flask,render_template,request,redirect
 import json
 import time
