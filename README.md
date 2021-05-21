@@ -6,8 +6,8 @@ For testing,
 
 1.I use the **Remix online IDE** to compile and deploy the smart contract(connection to the localhost node with **Ganache**).
 
-2.call the function Give_right_to_voters (do either with Remix or with python web3 interaction api)
-
+2.call the function Give_right_to_voters using the constructor address (do either with Remix or with python web3 interaction api) 
+  
 3.run the flask app, for those authorized voters and leaders, they can vote via browser.
 
 
