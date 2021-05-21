@@ -8,7 +8,7 @@ except:
     print('non connected!')
 with open('abi2.json','r') as f:
     abi=json.load(f)
-sorting_contract=w3.eth.contract(address='0xB1cE91D39Bb3DC71B2D70b72Ba65Ccf1cF9b8FC3',
+sorting_contract=w3.eth.contract(address='0xB1cE91D39Bb3DC71B2D70b72Ba65Ccf1cF9b8FC3', #remember to replace it with your own deployment result
                               abi=abi)
 
 if __name__=='__main__':
