@@ -8,16 +8,13 @@ def Ass_vote(addr):
         abi=json.load(f)
     sorting_contract=w3.eth.contract(address=addr,abi=abi)
     
-    
-    
     '''
     When I deploy the contract, I choose the first account as the contract constructor--->w3.eth.accounts[0],
     and initalize 3 options with 3 leaders --->w3.eth.accounts[1],w3.eth.accounts[2],w3.eth.accounts[3]
+   
+    So I set the voters from 4th account,here I simply set 5 voters, you are free to choose more voters, but be attention not to exceed the number of nodes in Ganache test
+    environment...
     '''
-    
-    '''
-    Here I simply set 5 voters, you are free to choose more voters, but be attention not to exceed the number of nodes in Ganache test
-    environment...'''
     num_voters=5
     names=['a','b','c','d','e'] #simple example
     print('Start assigning votes...')
