@@ -30,7 +30,7 @@ Test Steps
 
 **4.Assign Votes&Run App**
 >Then you can run the flask app by entering following statements in your terminal:  
-`python3 flask_app.py 'addr' `  
+`python3 flask_sorting.py 'addr' `  
 Here the addr is the address you copied in step 3.
 
  
