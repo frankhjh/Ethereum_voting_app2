@@ -1,8 +1,13 @@
-from conn import w3,sorting_contract
+from ass_vote import Ass_vote
 from flask import Flask,render_template,request,redirect,send_from_directory
+from web3 import Web3
 import json
 import time
 import os
+import sys
+
+contract_addr=sys.argv[1]
+w3,sorting_contract=Ass_vote(contract_addr) 
 
 vote_app2=Flask(__name__)
 
