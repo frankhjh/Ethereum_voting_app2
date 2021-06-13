@@ -19,8 +19,8 @@ def welcome():
 def favicon():
     return send_from_directory(os.path.join(vote_app2.root_path,'static'),'favicon.ico')
 
-@vote_app2.route('/<filename>')
-def ballot_status(filename):
+@vote_app2.route('/ballot_status.html')
+def ballot_status():
     #voter_info
     num_voters=sorting_contract.functions.num_voters().call()
     voter_addrs=[sorting_contract.functions.Valid_voter_address(i).call() for i in range(num_voters)]
@@ -35,16 +35,16 @@ def ballot_status(filename):
             res[name+'_'+option]=sorting_contract.functions.voter_option_match(name,option).call()[1]
 
     res_list=[[k,v] for k,v in res.items()]
-    return render_template(filename,data=res_list)
+    return render_template('ballot_status.html',data=res_list)
     
-@vote_app2.route('/<filename>',methods=['POST','GET'])
-def login(filename):
+@vote_app2.route('/login.html',methods=['POST','GET'])
+def login():
     if request.method=='GET':
-       return render_template(filename,error_message='')
+       return render_template('login.html',error_message='')
     #POST
     tp=request.form.get('type')
     if not tp:
-        return render_template(filename,error_message='Please select your identity first!')
+        return render_template('login.html',error_message='Please select your identity first!')
     else:
         addr=request.form.get('Address')
         #voter
@@ -54,13 +54,13 @@ def login(filename):
             authorized_addrs=[sorting_contract.functions.Valid_voter_address(i).call() for i in range(num_voters)]
             
             if addr not in authorized_addrs:
-                return render_template(filename,error_message='You have no right to vote!')
+                return render_template('login.html',error_message='You have no right to vote!')
             else:
                 current_voter=sorting_contract.functions.voters(addr).call()
                 if current_voter[1]==True:
-                    return render_template(filename,error_message='You have already voted!')
+                    return render_template('login.html',error_message='You have already voted!')
                 elif time.time()>sorting_contract.functions.deadline().call():
-                    return render_template(filename,error_message='The ballout is over!')
+                    return render_template('login.html',error_message='The ballout is over!')
                 else:
                     redirect_addr='/voter/'+addr
                     return redirect(redirect_addr)
@@ -68,13 +68,13 @@ def login(filename):
         num_leaders=sorting_contract.functions.num_options().call()
         leaders=[sorting_contract.functions.leader_address(i).call() for i in range(num_leaders)]
         if addr not in leaders:
-            return render_template(filename,error_message='You are not legal leader!')
+            return render_template('login.html',error_message='You are not legal leader!')
         else:
             current_leader=sorting_contract.functions.Leaders(addr).call()
             if current_leader[2]==True:
-                    return render_template(filename,error_message='You have already voted!')
+                    return render_template('login.html',error_message='You have already voted!')
             elif time.time()>sorting_contract.functions.deadline().call():
-                    return render_template(filename,error_message='The ballout is over!')
+                    return render_template('login.html',error_message='The ballout is over!')
             else:
                 redirect_addr='/leader/'+addr
                 return redirect(redirect_addr)
