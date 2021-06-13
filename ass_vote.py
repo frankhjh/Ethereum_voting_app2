@@ -17,9 +17,9 @@ def Ass_vote(addr):
     '''
     num_voters=5
     names=['a','b','c','d','e'] #simple example
-    print('Start assigning votes...')
+    print('Start assigning votes to voters...')
     for i in range(4,num_voters+4):
         sorting_contract.functions.Give_right_to_voters(w3.eth.accounts[i],names[i-4]).transact(transaction={'from':w3.eth.accounts[0]})
-    print('Assigned Done!')
+    print('Assignment Done!')
     return w3,sorting_contract
 
