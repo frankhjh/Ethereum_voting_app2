@@ -4,7 +4,7 @@ import sys
 
 def Ass_vote(addr):
     w3=Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545")) 
-    with open('abi.json','r') as f:
+    with open('abi2.json','r') as f:
         abi=json.load(f)
     sorting_contract=w3.eth.contract(address=addr,abi=abi)
     

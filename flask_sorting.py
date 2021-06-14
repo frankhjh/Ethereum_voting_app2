@@ -1,4 +1,4 @@
-from ass_vote import Ass_vote
+from ass_vote2 import Ass_vote
 from flask import Flask,render_template,request,redirect,send_from_directory
 from collections import defaultdict
 from web3 import Web3
@@ -10,7 +10,7 @@ import sys
 contract_addr=sys.argv[1]
 w3,sorting_contract=Ass_vote(contract_addr) 
 
-vote_app2=Flask(__name__)
+vote_app2=Flask(__name__,static_folder='static2',template_folder='templates2')
 
 @vote_app2.route('/')
 def welcome():
