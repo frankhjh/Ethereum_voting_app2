@@ -1,5 +1,6 @@
 from ass_vote import Ass_vote
 from flask import Flask,render_template,request,redirect,send_from_directory
+from collections import defaultdict
 from web3 import Web3
 import json
 import time
@@ -29,12 +30,13 @@ def ballot_status():
     num_options=sorting_contract.functions.num_options().call()
     options=[sorting_contract.functions.Options(i).call() for i in range(num_options)]
 
-    res={}
+    res=defaultdict(dict)
     for name in voter_names:
         for option in options:
-            res[name+'_'+option]=sorting_contract.functions.voter_option_match(name,option).call()[1]
-
-    res_list=[[k,v] for k,v in res.items()]
+            res[name+'-'+option]['voter2option']=sorting_contract.functions.voter_option_match(name,option).call()[1]
+            res[name+'-'+option]['option2voter']=sorting_contract.functions.option_voter_match(option,name).call()[1]
+   
+    res_list=[[k,sum(v.values())] for k,v in res.items()]
     return render_template('ballot_status.html',data=res_list)
     
 @vote_app2.route('/login.html',methods=['POST','GET'])
