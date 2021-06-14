@@ -21,7 +21,14 @@ contract Ballot2{
         uint count; //number of accumulated votes
     }
 
+    
+    struct vv{
+        string name;
+        uint count;
+    }
+
     mapping (string=> mapping (string=>Option)) public voter_option_match; //mapping between voters and options
+    mapping (string=> mapping (string=>vv)) public option_voter_match;
 
     uint256 public deadline; //deadline of the voting
     address public chairperson; //promoter
@@ -76,6 +83,11 @@ contract Ballot2{
             voter_option_match[voters[voter].name][Options[i]].name=Options[i];
             voter_option_match[voters[voter].name][Options[i]].count=0;
         }
+
+        for(uint i=0;i<num_options;i++){
+            option_voter_match[Options[i]][voters[voter].name].name=voters[voter].name;
+            option_voter_match[Options[i]][voters[voter].name].count=0;
+        }
     }
     
     //do not use any state variable, so can be resitricted to pure
@@ -123,7 +135,7 @@ contract Ballot2{
 
     function Vote_leader(address[] memory prefer_voters,uint[] memory point_assignment) public {
         Leader storage l=Leaders[msg.sender];
-
+        
         require(block.timestamp<deadline,"Time is over!");//should assign before deadline
         require(prefer_voters.length==point_assignment.length);
         for(uint i=0;i<prefer_voters.length;i++){
@@ -142,8 +154,7 @@ contract Ballot2{
         l.assign_voters=prefer_voters;
 
         for(uint i=0;i<prefer_voters.length;i++){
-            voter_option_match[voters[prefer_voters[i]].name][l.option_name].count+=point_assignment[i];
-          
+            option_voter_match[l.option_name][voters[prefer_voters[i]].name].count+=point_assignment[i];
         }
     
     }  
