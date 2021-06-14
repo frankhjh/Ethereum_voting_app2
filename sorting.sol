@@ -128,6 +128,7 @@ contract Ballot2{
         v.preferred_option_names=option_names;
 
         for(uint i=0;i<option_names.length;i++){
+           // Need to split points before storing
            voter_option_match[v.name][option_names[i]].count+=point_allocation[i];
            v.preferred_option_names.push(option_names[i]);
         }
