@@ -18,7 +18,7 @@ def welcome():
 
 @vote_app2.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(vote_app2.root_path,'static'),'favicon.ico')
+    return send_from_directory(os.path.join(vote_app2.root_path,'static2'),'favicon.ico')
 
 @vote_app2.route('/ballot_status.html')
 def ballot_status():
